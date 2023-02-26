@@ -1,19 +1,31 @@
-import React, {useState} from 'react'
-import Axios from 'axios'
+import React, { useState } from 'react'
+import axios from 'axios'
 
 function App() {
+  const [data,setData] = useState({})
+  const [location, setLocation] = useState('')
 
-  //old one from video const url = 'https://api.openweathermap.org/data/2.5/weather?q=joliet&appid=f3ddae2d1bfe3052a42b109ae6f7ba02'
-  //geolocator http://api.openweathermap.org/geo/1.0/direct?q=London&limit=5&appid=f3ddae2d1bfe3052a42b109ae6f7ba02
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&appid=f3ddae2d1bfe3052a42b109ae6f7ba02`
+
+
+  const searchLocation = (event) => {
+    if (event.key === 'Enter'){
+      axios.get(url).then((response) => {
+        setData(response.data)
+        console.log(response.data)
+      })
+      setLocation('')
+    }
+  }
 
   return (
     <div className="App">
 
-      <div class="container-fluid">
+      <div className="container-fluid">
 
-        <div class="row" id='row1'>
+        <div className="row" id='row1'>
 
-          <div class="col-lg-12">
+          <div className="col-lg-12">
             <div className="logoSearch">
               <h1>GlobalGuide</h1>
             </div>
@@ -21,23 +33,37 @@ function App() {
 
         </div>
 
-        <div class="row" id='row2'>
+        <div className="row" id='row2'>
 
-          <div class="col-lg-4 order-lg-1 col-12 order-2">
+          <div className="col-lg-4 order-lg-1 col-12 order-2">
             <div className="locationScore">
             <h1>Location Score</h1>
               <div className="circle1">
                 <h1>83°</h1>
+                <span className="popup1">
+                  <h2>Location: </h2>
+                  <h2>Sightseeing: </h2>
+                  <h2>Restaurants:</h2>
+                  <h2>Shopping: </h2>
+                  <h2>Nightlife: </h2>
+                </span>
               </div>
             </div>
           </div>
 
-          <div class="col-lg-4 order-lg-2 col-12 order-1">
+          <div className="col-lg-4 order-lg-2 col-12 order-1">
             <div className="titleSearch">
               <div className="searchBar">
                 <div className='input-group'>
-                  <input type="search" class="form-control rounded" placeholder="Enter City Name..." aria-label="Search" aria-describedby="search-addon" />
-                  <button type="button" class="btn btn-outline-primary">Explore</button>
+                  <input 
+                  value={location}
+                  onChange={event => setLocation(event.target.value)}
+                  /*Used "onKeyDown" instead of "onKeyPress"*/
+                  onKeyDown={searchLocation}
+                  type="text" className="form-control rounded" 
+                  placeholder="Enter City Name..." 
+                  aria-label="Search" 
+                  aria-describedby="search-addon" />
                 </div>
               </div>
               <div className="beforeTitle">
@@ -48,20 +74,29 @@ function App() {
             </div>
           </div>
 
-          <div class="col-lg-4 order-lg-3 col-12 order-3">
+          <div className="col-lg-4 order-lg-3 col-12 order-3">
             <div className="safeScore">
               <h1>Safety Score</h1>
               <div className="circle1">
                 <h1>55°</h1>
+                <span className="popup2">
+                  <h2>Safety: </h2>
+                  <h2>Women: </h2>
+                  <h2>Physical Harm:</h2>
+                  <h2>Theft: </h2>
+                  <h2>Political Freedom: </h2>
+                  <h2>LGBTQ: </h2>
+                  <h2>Medical: </h2>
+                </span>
               </div>
             </div>
           </div>
 
         </div>
 
-        <div class="row" id='row3'>
+        <div className="row" id='row3'>
 
-          <div class="col-lg-4 order-lg-1 col-12 order-2">
+          <div className="col-lg-4 order-lg-1 col-12 order-2">
           <div className="news">
               <h1>News</h1>
               <div className="square">
@@ -74,21 +109,23 @@ function App() {
             </div>
           </div>
 
-          <div class="col-lg-4 order-lg-2 col-12 order-1">
+          <div className="col-lg-4 order-lg-2 col-12 order-1">
+            {data.name != undefined &&
             <div className="weatherTitle">
               <div className="theTitle">
-                <h1>Chicago</h1>
+                <h1>{data.name}</h1>
               </div>
               <div className="circle2">
                 <div className='text'>
-                  <h1>32°</h1>
-                  <h2>Light Rain</h2>
+                  {data.main ? <h1>{data.main.temp.toFixed()}°F</h1> : null}
+                  {data.weather ? <h2>{data.weather[0].main}</h2> : null}
                 </div>
               </div>
             </div>
+            }
           </div>
 
-          <div class="col-lg-4 order-lg-3 col-12 order-3">
+          <div className="col-lg-4 order-lg-3 col-12 order-3">
             <div className="thingsToDo">
               <h1>Things To Do</h1>
               <div className="square">

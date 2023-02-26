@@ -141,7 +141,7 @@ code {
 }
 
 .theTitle h1{
-  font-size: 15vh;
+  font-size: 10vh;
   text-align: center;
   padding: 1vh;
   color: red;
@@ -152,8 +152,8 @@ code {
 }
 
 .circle2{
-  height: 37.5vh;
-  width: 40vh;
+  height: 30vh;
+  width: 35vh;
   background-color: #bbb;
   border-radius: 50%;
   display: inline-block;
@@ -176,6 +176,49 @@ code {
 
 .circle2 h2{
   font-size: 5vh;
+}
+
+.popup1{
+  visibility: hidden;
+  position: fixed;
+  z-index: 1;
+  border-radius: 30px;
+  width: 40vh;
+  height: 32vh;
+  background-color: aqua;
+  border: 3px solid black;
+}
+
+.popup1 h2{
+  width: 300px;
+  text-align: left;
+  padding-left: 3vh;
+}
+
+.popup2{
+  visibility: hidden;
+  position: fixed;
+  z-index: 1;
+  border-radius: 30px;
+  width: 45vh;
+  height: 43vh;
+  right: 30vh;
+  background-color: aqua;
+  border: 3px solid black;
+}
+
+.popup2 h2{
+  width: 300px;
+  text-align: left;
+  padding-left: 3vh;
+}
+
+.circle1:hover .popup1{
+  visibility: visible;
+}
+
+.circle1:hover .popup2{
+  visibility: visible;
 }
 
 /*Media*/
