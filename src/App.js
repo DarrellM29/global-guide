@@ -13,7 +13,7 @@ function App() {
 
         <div class="row" id='row1'>
 
-          <div class="col-sm-12 col-m-12 col-lg-12">
+          <div class="col-lg-12">
             <div className="logoSearch">
               <h1>GlobalGuide</h1>
             </div>
@@ -23,7 +23,7 @@ function App() {
 
         <div class="row" id='row2'>
 
-          <div class="col-sm-12 col-lg-4">
+          <div class="col-lg-4 order-lg-1 col-12 order-2">
             <div className="locationScore">
             <h1>Location Score</h1>
               <div className="circle1">
@@ -32,7 +32,7 @@ function App() {
             </div>
           </div>
 
-          <div class="col-sm-12 col-lg-4">
+          <div class="col-lg-4 order-lg-2 col-12 order-1">
             <div className="titleSearch">
               <div className="searchBar">
                 <div className='input-group'>
@@ -48,7 +48,7 @@ function App() {
             </div>
           </div>
 
-          <div class="col-sm-12 col-lg-4">
+          <div class="col-lg-4 order-lg-3 col-12 order-3">
             <div className="safeScore">
               <h1>Safety Score</h1>
               <div className="circle1">
@@ -61,7 +61,7 @@ function App() {
 
         <div class="row" id='row3'>
 
-          <div class="col-sm-12 col-lg-4">
+          <div class="col-lg-4 order-lg-1 col-12 order-2">
           <div className="news">
               <h1>News</h1>
               <div className="square">
@@ -74,7 +74,7 @@ function App() {
             </div>
           </div>
 
-          <div class="col-sm-12 col-lg-4">
+          <div class="col-lg-4 order-lg-2 col-12 order-1">
             <div className="weatherTitle">
               <div className="theTitle">
                 <h1>Chicago</h1>
@@ -88,7 +88,7 @@ function App() {
             </div>
           </div>
 
-          <div class="col-sm-12 col-lg-4">
+          <div class="col-lg-4 order-lg-3 col-12 order-3">
             <div className="thingsToDo">
               <h1>Things To Do</h1>
               <div className="square">
