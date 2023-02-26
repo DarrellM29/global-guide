@@ -23,70 +23,163 @@ code {
   height: 100vh;
   position: relative;
   border: 3px solid black;
+  text-align: center;
 }
 
-.container {
+#row1{
+  height: 7.5vh;
   border: 3px solid black;
-  max-width: 90%;
-  height: 95%;
-  margin: auto;
-  padding: 0 1rem;
   position: relative;
-  top: 2%;
-  bottom: 2%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
-.news {
-  text-align: center;
-  height: 45%;
-  width: 30%;
+#row2{
+  height: 27.5vh;
   border: 3px solid black;
 }
 
-.thingsToDo {
-  text-align: center;
-  height: 45%;
-  width: 30%;
+#row3{
+  height: 65vh;
   border: 3px solid black;
+}
+
+.logoSearch {
+  margin-top: 1vh;
+}
+
+.logoSearch h1{
+  font-size: 3.5vh;
+  color: red;
 }
 
 .locationScore {
-  text-align: center;
+  height: 100%;
+  padding: 1vh;
 }
 
-.safetyScore {
+.safeScore {
+  height: 100%;
+  padding: 1vh;
+}
+
+.circle1{
+  height: 20vh;
+  width: 22.5vh;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  border: 3px solid black;
+}
+
+.circle1 h1{
+  width: 50%;
+  height: 50%;
+  margin: 0;
+  position: relative;
+  top: 25%;
+  left: 27.5%;
+  transform: translateY(-50%, -50%);
   text-align: center;
+  font-size: 7.5vh;
+}
+
+.searchBar{
+  padding-top: 1vh;
+  padding-bottom: 5vh;
+  position: relative;
+}
+
+.input-group{
+  height: 7vh;
+}
+
+.input-group .form-control.rounded{
+  font-size: 2vh;
+}
+
+.input-group .btn.btn-outline-primary{
+  width: 12vh;
+  font-size: 2.25vh;
+}
+
+.news{
+  height: 65vh;
+  border: 3px solid black;
+  padding: 2vh;
+  padding-top: 3vh;
+  
+}
+
+.news h1 {
+  padding-bottom: 1vh;
+  height: 8vh;
+}
+
+.thingsToDo{
+  height: 65vh;
+  border: 3px solid black;
+  padding: 2vh;
+  padding-top: 3vh;
+  position: relative;
+}
+
+.thingsToDo h1 {
+  padding-bottom: 1vh;
+  height: 8vh;
 }
 
 .square {
   border: 3px solid black;
   border-radius: 30px;
-  padding: 20px;
+  padding: 2vh;
   text-align: center;
-  height: 85%;
+  height: 50vh;
   width: 100%;
 }
 
-.circle1 {
-  border: 3px solid black;
-  border-radius: 50%;
-  padding: 20px;
-  width: 90px;
-  height: auto;
-  text-align: center;
+.square h1{
+  padding-top: 2vh;
+  font-size: 3.5vh;
 }
 
-.circle2 {
+.theTitle{
+  padding-top: 2vh;
+  padding-bottom: 2vh;
   border: 3px solid black;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  text-align: center;
+  position: relative;
 }
 
-.circle2 h1 {
-  padding: 5px;
+.theTitle h1{
+  font-size: 15vh;
+  text-align: center;
+  padding: 1vh;
+  color: red;
+}
+
+.circle2{
+  height: 37.5vh;
+  width: 40vh;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  border: 3px solid black;
+  position: relative;
+}
+
+.circle2 .text {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  border: 3px solid black;
+  padding-top: 3vh;
+}
+
+.circle2 h1{
+  padding-top: 1.5vh;
+  text-align: center;
+  font-size: 10vh;
+  border: 3px solid black;
+}
+
+.circle2 h2{
+  font-size: 5vh;
 }

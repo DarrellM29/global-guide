@@ -8,66 +8,103 @@ function App() {
 
   return (
     <div className="App">
-      <div className="container">
-        <div className="logoSearch">
-          <h1>GlobalGuide</h1>
+
+      <div class="container-fluid">
+
+        <div class="row" id='row1'>
+
+          <div class="col-sm-12 col-m-12 col-lg-12">
+            <div className="logoSearch">
+              <h1>GlobalGuide</h1>
+            </div>
+          </div>
+
         </div>
 
-        <div className="title">
-          <div className="beforeTitle">
-            <h1>It is currently...</h1>
-            <h1>4:30pm on July 27th, 2023</h1>
-            <h1>in...</h1>
+        <div class="row" id='row2'>
+
+          <div class="col-sm-12 col-lg-4">
+            <div className="locationScore">
+            <h1>Location Score</h1>
+              <div className="circle1">
+                <h1>83°</h1>
+              </div>
+            </div>
           </div>
-          <div className="theTitle">
-            <h1>Chicago</h1>
+
+          <div class="col-sm-12 col-lg-4">
+            <div className="titleSearch">
+              <div className="searchBar">
+                <div className='input-group'>
+                  <input type="search" class="form-control rounded" placeholder="Enter City Name..." aria-label="Search" aria-describedby="search-addon" />
+                  <button type="button" class="btn btn-outline-primary">Explore</button>
+                </div>
+              </div>
+              <div className="beforeTitle">
+                <h1>It is currently...</h1>
+                <h1>4:30pm on July 27th, 2023</h1>
+                <h1>in...</h1>
+              </div>
+            </div>
           </div>
+
+          <div class="col-sm-12 col-lg-4">
+            <div className="safeScore">
+              <h1>Safety Score</h1>
+              <div className="circle1">
+                <h1>55°</h1>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <div className="locationScore">
-          <h1>Location Score</h1>
-          <div className="circle1">
-            <h1>83°</h1>
-          </div>
-        </div>
+        <div class="row" id='row3'>
 
-        <div className="safetyScore">
-          <h1>Safety Score</h1>
-          <div className="circle1">
-            <h1>55°</h1>
+          <div class="col-sm-12 col-lg-4">
+          <div className="news">
+              <h1>News</h1>
+              <div className="square">
+                <h1>News Network - Article #1 - Date</h1>
+                <h1>News Network - Article #2 - Date</h1>
+                <h1>News Network - Article #3 - Date</h1>
+                <h1>News Network - Article #4 - Date</h1>
+                <h1>News Network - Article #5 - Date</h1>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div className="news">
-          <h1>News</h1>
-          <div className="square">
-            <h1>News Network - News Article #1 - Date</h1>
-            <h1>News Network - News Article #2 - Date</h1>
-            <h1>News Network - News Article #3 - Date</h1>
-            <h1>News Network - News Article #4 - Date</h1>
-            <h1>News Network - News Article #5 - Date</h1>
+          <div class="col-sm-12 col-lg-4">
+            <div className="weatherTitle">
+              <div className="theTitle">
+                <h1>Chicago</h1>
+              </div>
+              <div className="circle2">
+                <div className='text'>
+                  <h1>32°</h1>
+                  <h2>Light Rain</h2>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div className="thingsToDo">
-          <h1>Things To Do</h1>
-          <div className="square">
-            <h1>Place #1 - Location - Category</h1>
-            <h1>Place #2 - Location - Category</h1>
-            <h1>Place #3 - Location - Category</h1>
-            <h1>Place #4 - Location - Category</h1>
-            <h1>Place #5 - Location - Category</h1>
+          <div class="col-sm-12 col-lg-4">
+            <div className="thingsToDo">
+              <h1>Things To Do</h1>
+              <div className="square">
+                <h1>Place #1 - Location - Category</h1>
+                <h1>Place #2 - Location - Category</h1>
+                <h1>Place #3 - Location - Category</h1>
+                <h1>Place #4 - Location - Category</h1>
+                <h1>Place #5 - Location - Category</h1>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div className="weather">
-          <div className="circle2">
-            <h1>32°</h1>
-            <h1>Light Rain</h1>
-          </div>
         </div>
 
       </div>
+
     </div>
   );
 }
