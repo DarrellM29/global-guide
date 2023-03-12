@@ -2,17 +2,23 @@ import React, { useState } from 'react'
 import axios from 'axios'
 
 function App() {
-  const [data,setData] = useState({})
+  const [weatherData,setWeatherData] = useState({})
+  const [newsData,setNewsData] = useState([])
   const [location, setLocation] = useState('')
-
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&appid=f3ddae2d1bfe3052a42b109ae6f7ba02`
-
+  
 
   const searchLocation = (event) => {
     if (event.key === 'Enter'){
-      axios.get(url).then((response) => {
-        setData(response.data)
+      const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
+      const newsUrl = `https://newsapi.org/v2/top-headlines?q=${location}&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`
+
+      axios.get(weatherUrl).then((response) => {
+        setWeatherData(response.data)
         console.log(response.data)
+      })
+      axios.get(newsUrl).then((response) => {
+        setNewsData(response.data.articles)
+        console.log(response.data.articles)
       })
       setLocation('')
     }
@@ -58,7 +64,6 @@ function App() {
                   <input 
                   value={location}
                   onChange={event => setLocation(event.target.value)}
-                  /*Used "onKeyDown" instead of "onKeyPress"*/
                   onKeyDown={searchLocation}
                   type="text" className="form-control rounded" 
                   placeholder="Enter City Name..." 
@@ -97,28 +102,41 @@ function App() {
         <div className="row" id='row3'>
 
           <div className="col-lg-4 order-lg-1 col-12 order-2">
-          <div className="news">
+
+            {newsData.length !== 0 &&
+            <div className="news">
               <h1>News</h1>
               <div className="square">
-                <h1>News Network - Article #1 - Date</h1>
-                <h1>News Network - Article #2 - Date</h1>
-                <h1>News Network - Article #3 - Date</h1>
-                <h1>News Network - Article #4 - Date</h1>
-                <h1>News Network - Article #5 - Date</h1>
+              {newsData.length !== 0 && newsData.map((article, index) => (
+                <a href={article.url} target="_blank" rel="noopener noreferrer">
+                  <h1 key={index}>{article.source.name} - {article.title.slice(0, 35)}</h1>
+                </a>
+              ))}
               </div>
             </div>
+            }
+
+            {newsData.length === 0 &&
+            <div className="news">
+              <h1>News</h1>
+              <div className="square">
+                <h1 className="error1">No news for this area</h1>
+              </div>
+            </div>
+            }
+
           </div>
 
           <div className="col-lg-4 order-lg-2 col-12 order-1">
-            {data.name != undefined &&
+            {weatherData.name !== undefined &&
             <div className="weatherTitle">
               <div className="theTitle">
-                <h1>{data.name}</h1>
+                <h1>{weatherData.name}</h1>
               </div>
               <div className="circle2">
                 <div className='text'>
-                  {data.main ? <h1>{data.main.temp.toFixed()}°F</h1> : null}
-                  {data.weather ? <h2>{data.weather[0].main}</h2> : null}
+                  {weatherData.main ? <h1>{weatherData.main.temp.toFixed()}°F</h1> : null}
+                  {weatherData.weather ? <h2>{weatherData.weather[0].main}</h2> : null}
                 </div>
               </div>
             </div>

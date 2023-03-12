@@ -110,6 +110,11 @@ code {
   height: 8vh;
 }
 
+.error1 {
+  color: red;
+  margin-top: 40%;
+}
+
 .thingsToDo{
   height: 65vh;
   padding: 2vh;
