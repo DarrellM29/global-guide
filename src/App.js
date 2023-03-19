@@ -1,16 +1,21 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 
+
 function App() {
+  
+  
   const [weatherData,setWeatherData] = useState({})
   const [newsData,setNewsData] = useState([])
+  const [breweryData, setBreweryData] = useState([])
   const [location, setLocation] = useState('')
-  
 
   const searchLocation = (event) => {
     if (event.key === 'Enter'){
       const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
       const newsUrl = `https://newsapi.org/v2/top-headlines?q=${location}&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`
+      const breweryUrl = `https://api.openbrewerydb.org/breweries?by_city=${location}&per_page=5`
+      const locationScoreUrl = `https://api.teleport.org/api/urban_areas/slug:${location}/scores/`
 
       axios.get(weatherUrl).then((response) => {
         setWeatherData(response.data)
@@ -20,6 +25,11 @@ function App() {
         setNewsData(response.data.articles)
         console.log(response.data.articles)
       })
+      axios.get(breweryUrl).then((response) => {
+        setBreweryData(response.data)
+        console.log(response.data)
+      })
+  
       setLocation('')
     }
   }
@@ -109,7 +119,7 @@ function App() {
               <div className="square">
               {newsData.length !== 0 && newsData.map((article, index) => (
                 <a href={article.url} target="_blank" rel="noopener noreferrer">
-                  <h1 key={index}>{article.source.name} - {article.title.slice(0, 35)}</h1>
+                  <h1 key={index}>{article.source.name} - {article.title.slice(0, 25)}</h1>
                 </a>
               ))}
               </div>
@@ -145,13 +155,13 @@ function App() {
 
           <div className="col-lg-4 order-lg-3 col-12 order-3">
             <div className="thingsToDo">
-              <h1>Things To Do</h1>
+              <h1>Breweries</h1>
               <div className="square">
-                <h1>Place #1 - Location - Category</h1>
-                <h1>Place #2 - Location - Category</h1>
-                <h1>Place #3 - Location - Category</h1>
-                <h1>Place #4 - Location - Category</h1>
-                <h1>Place #5 - Location - Category</h1>
+              {breweryData.length !== 0 && breweryData.map((brews, index) => (
+                <a href={brews.website_url} target="_blank" rel="noopener noreferrer">
+                  <h1 key={index}>{brews.name} - {brews.street.slice(0, 25)}</h1>
+                </a>
+              ))}
               </div>
             </div>
           </div>
