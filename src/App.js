@@ -8,6 +8,7 @@ function App() {
   const [weatherData,setWeatherData] = useState({})
   const [newsData,setNewsData] = useState([])
   const [breweryData, setBreweryData] = useState([])
+  const [locationScoreData, setLocationScoreData] = useState([])
   const [location, setLocation] = useState('')
 
   const searchLocation = (event) => {
@@ -15,7 +16,7 @@ function App() {
       const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
       const newsUrl = `https://newsapi.org/v2/top-headlines?q=${location}&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`
       const breweryUrl = `https://api.openbrewerydb.org/breweries?by_city=${location}&per_page=5`
-      const locationScoreUrl = `https://api.teleport.org/api/urban_areas/slug:${location}/scores/`
+      const locationScoreUrl = `https://api.teleport.org/api/urban_areas/slug:${location.toLowerCase()}/scores/`
 
       axios.get(weatherUrl).then((response) => {
         setWeatherData(response.data)
@@ -27,6 +28,10 @@ function App() {
       })
       axios.get(breweryUrl).then((response) => {
         setBreweryData(response.data)
+        console.log(response.data)
+      })
+      axios.get(locationScoreUrl).then((response) => {
+        setLocationScoreData(response.data)
         console.log(response.data)
       })
   
@@ -52,19 +57,21 @@ function App() {
         <div className="row" id='row2'>
 
           <div className="col-lg-4 order-lg-1 col-12 order-2">
-            <div className="locationScore">
-            <h1>Location Score</h1>
-              <div className="circle1">
-                <h1>83°</h1>
-                <span className="popup1">
-                  <h2>Location: </h2>
-                  <h2>Sightseeing: </h2>
-                  <h2>Restaurants:</h2>
-                  <h2>Shopping: </h2>
-                  <h2>Nightlife: </h2>
-                </span>
+
+              <div className="locationScore">
+              <h1>Location Score</h1>
+                <div className="circle1">
+                  <h1>{locationScoreData.teleport_city_score}</h1>
+                  <span className="popup1">
+                    <h2>Location: </h2>
+                    <h2>Sightseeing: </h2>
+                    <h2>Restaurants:</h2>
+                    <h2>Shopping: </h2>
+                    <h2>Nightlife: </h2>
+                  </span>
+                </div>
               </div>
-            </div>
+
           </div>
 
           <div className="col-lg-4 order-lg-2 col-12 order-1">
