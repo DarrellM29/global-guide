@@ -9,6 +9,7 @@ function App() {
   const [newsData,setNewsData] = useState([])
   const [breweryData, setBreweryData] = useState([])
   const [locationScoreData, setLocationScoreData] = useState([])
+  const [safetyScoreData, setSafetyScoreData] = useState([])
   const [location, setLocation] = useState('')
 
   const searchLocation = (event) => {
@@ -16,7 +17,8 @@ function App() {
       const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
       const newsUrl = `https://newsapi.org/v2/top-headlines?q=${location}&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`
       const breweryUrl = `https://api.openbrewerydb.org/breweries?by_city=${location}&per_page=5`
-      const locationScoreUrl = `https://api.teleport.org/api/urban_areas/slug:${location.toLowerCase()}/scores/`
+      const locationScoreUrl = `https://api.teleport.org/api/urban_areas/slug:${location.toLowerCase().replace(/\s+/g, '-')}/scores/`
+      const safetyScoreUrl = ``
 
       axios.get(weatherUrl).then((response) => {
         setWeatherData(response.data)
@@ -58,19 +60,33 @@ function App() {
 
           <div className="col-lg-4 order-lg-1 col-12 order-2">
 
+            {locationScoreData.length !== 0 &&
               <div className="locationScore">
               <h1>Location Score</h1>
                 <div className="circle1">
-                  <h1>{locationScoreData.teleport_city_score}</h1>
+                  <h1>{locationScoreData.teleport_city_score.toFixed()}</h1>
+                  {locationScoreData.teleport_city_score && locationScoreData.categories && (
                   <span className="popup1">
-                    <h2>Location: </h2>
-                    <h2>Sightseeing: </h2>
-                    <h2>Restaurants:</h2>
-                    <h2>Shopping: </h2>
-                    <h2>Nightlife: </h2>
+                    <h2>TC: {locationScoreData.categories.find(category => category.name === "Travel Connectivity").score_out_of_10.toFixed(2)}</h2>
+                    <h2>Safety: {locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10.toFixed(2)}</h2>
+                    <h2>EQ: {locationScoreData.categories.find(category => category.name === "Environmental Quality").score_out_of_10.toFixed(2)}</h2>
+                    <h2>Taxation: {locationScoreData.categories.find(category => category.name === "Taxation").score_out_of_10.toFixed(2)}</h2>
+                    <h2>Internet: {locationScoreData.categories.find(category => category.name === "Internet Access").score_out_of_10.toFixed(2)}</h2>
                   </span>
+                  )}
                 </div>
               </div>
+            }
+
+            {locationScoreData.length === 0 &&
+              <div className="locationScore">
+              <h1>Location Score</h1>
+                <div className="circle1">
+                  <h1 className="error1">N/A</h1>
+                </div>
+              </div>
+            }
+
 
           </div>
 
@@ -97,21 +113,29 @@ function App() {
           </div>
 
           <div className="col-lg-4 order-lg-3 col-12 order-3">
-            <div className="safeScore">
-              <h1>Safety Score</h1>
-              <div className="circle1">
-                <h1>55°</h1>
-                <span className="popup2">
-                  <h2>Safety: </h2>
-                  <h2>Women: </h2>
-                  <h2>Physical Harm:</h2>
-                  <h2>Theft: </h2>
-                  <h2>Political Freedom: </h2>
-                  <h2>LGBTQ: </h2>
-                  <h2>Medical: </h2>
-                </span>
+
+            {safetyScoreData.length !== 0 &&
+              <div className="safeScore">
+                <h1>Safety Score</h1>
+                <div className="circle1">
+                  <h1>55°</h1>
+                  <span className="popup2">
+                    <h2>Bike Score: </h2>
+                    <h2>Transit Score: </h2>
+                  </span>
+                </div>
               </div>
-            </div>
+            }
+
+            {safetyScoreData.length === 0 &&
+              <div className="safeScore">
+              <h1>Safety Score</h1>
+                <div className="circle1">
+                  <h1 className="error1">N/A</h1>
+                </div>
+              </div>
+            }
+
           </div>
 
         </div>
@@ -124,9 +148,9 @@ function App() {
             <div className="news">
               <h1>News</h1>
               <div className="square">
-              {newsData.length !== 0 && newsData.map((article, index) => (
-                <a href={article.url} target="_blank" rel="noopener noreferrer">
-                  <h1 key={index}>{article.source.name} - {article.title.slice(0, 25)}</h1>
+              {newsData.length !== 0 && newsData.slice(0, 5).map((article, index) => (
+                <a key={article.url} href={article.url} target="_blank" rel="noopener noreferrer">
+                  <h1>{article.source.name} - {article.title.slice(0, 25)}</h1>
                 </a>
               ))}
               </div>
@@ -158,19 +182,45 @@ function App() {
               </div>
             </div>
             }
+
+            {weatherData.name === undefined &&
+              <div className="weatherTitle">
+                <div className="theTitle">
+                  <h1>{location}</h1>
+                </div>
+                <div className="circle2">
+                  <div className='text'>
+                    <h2 className="error1">Not Available</h2>
+                  </div>
+                </div>
+              </div>
+            }
           </div>
 
           <div className="col-lg-4 order-lg-3 col-12 order-3">
+
+            {breweryData.length !== 0 &&
+              <div className="thingsToDo">
+                <h1>Breweries</h1>
+                <div className="square">
+                {breweryData.length !== 0 && breweryData.map((brews, index) => (
+                  <a key={brews.url} href={brews.website_url} target="_blank" rel="noopener noreferrer">
+                    <h1>{brews.name} - {brews.street}</h1>
+                  </a>
+                ))}
+                </div>
+              </div>
+            }
+
+            {breweryData.length === 0 &&
             <div className="thingsToDo">
               <h1>Breweries</h1>
               <div className="square">
-              {breweryData.length !== 0 && breweryData.map((brews, index) => (
-                <a href={brews.website_url} target="_blank" rel="noopener noreferrer">
-                  <h1 key={index}>{brews.name} - {brews.street.slice(0, 25)}</h1>
-                </a>
-              ))}
+                <h1 className="error1">No breweries for this area</h1>
               </div>
             </div>
+            }
+
           </div>
 
         </div>
