@@ -9,34 +9,63 @@ function App() {
   const [newsData,setNewsData] = useState([])
   const [breweryData, setBreweryData] = useState([])
   const [locationScoreData, setLocationScoreData] = useState([])
-  const [safetyScoreData, setSafetyScoreData] = useState([])
+  const [timeData, setTimeData] = useState([])
   const [location, setLocation] = useState('')
+
+  const refresh = () => {
+    setWeatherData({})
+    setNewsData([])
+    setBreweryData([])
+    setTimeData([])
+    setLocationScoreData([])
+  }
 
   const searchLocation = (event) => {
     if (event.key === 'Enter'){
+
+      refresh()
+
       const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
       const newsUrl = `https://newsapi.org/v2/top-headlines?q=${location}&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`
       const breweryUrl = `https://api.openbrewerydb.org/breweries?by_city=${location}&per_page=5`
       const locationScoreUrl = `https://api.teleport.org/api/urban_areas/slug:${location.toLowerCase().replace(/\s+/g, '-')}/scores/`
-      const safetyScoreUrl = ``
+      const timeUrl = `https://api.ipgeolocation.io/timezone?apiKey=8ad77b2dcf574924a6a29e8500326b37&location=${location}`
+
+      axios.get(timeUrl).then((response) => {
+        setTimeData(response.data)
+        console.log(response.data)
+      }).catch((error) => {
+        console.log(error)
+      })
 
       axios.get(weatherUrl).then((response) => {
         setWeatherData(response.data)
         console.log(response.data)
-      })
-      axios.get(newsUrl).then((response) => {
-        setNewsData(response.data.articles)
-        console.log(response.data.articles)
-      })
-      axios.get(breweryUrl).then((response) => {
-        setBreweryData(response.data)
-        console.log(response.data)
-      })
-      axios.get(locationScoreUrl).then((response) => {
-        setLocationScoreData(response.data)
-        console.log(response.data)
-      })
-  
+        }).catch((error) => {
+            console.log(error)
+        })
+
+        axios.get(newsUrl).then((response) => {
+            setNewsData(response.data.articles)
+            console.log(response.data.articles)
+        }).catch((error) => {
+            console.log(error)
+        })
+
+        axios.get(breweryUrl).then((response) => {
+            setBreweryData(response.data)
+            console.log(response.data)
+        }).catch((error) => {
+            console.log(error)
+        })
+
+        axios.get(locationScoreUrl).then((response) => {
+            setLocationScoreData(response.data)
+            console.log(response.data)
+        }).catch((error) => {
+            console.log(error)
+        })
+
       setLocation('')
     }
   }
@@ -67,11 +96,11 @@ function App() {
                   <h1>{locationScoreData.teleport_city_score.toFixed()}</h1>
                   {locationScoreData.teleport_city_score && locationScoreData.categories && (
                   <span className="popup1">
-                    <h2>TC: {locationScoreData.categories.find(category => category.name === "Travel Connectivity").score_out_of_10.toFixed(2)}</h2>
-                    <h2>Safety: {locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10.toFixed(2)}</h2>
-                    <h2>EQ: {locationScoreData.categories.find(category => category.name === "Environmental Quality").score_out_of_10.toFixed(2)}</h2>
-                    <h2>Taxation: {locationScoreData.categories.find(category => category.name === "Taxation").score_out_of_10.toFixed(2)}</h2>
-                    <h2>Internet: {locationScoreData.categories.find(category => category.name === "Internet Access").score_out_of_10.toFixed(2)}</h2>
+                    <h2>L&C: {(locationScoreData.categories.find(category => category.name === "Leisure & Culture").score_out_of_10 * 10).toFixed(0)}</h2>
+                    <h2>Outdoors: {(locationScoreData.categories.find(category => category.name === "Outdoors").score_out_of_10 * 10).toFixed(0)}</h2>
+                    <h2>Taxes: {(locationScoreData.categories.find(category => category.name === "Taxation").score_out_of_10 * 10).toFixed(0)}</h2>
+                    <h2>Econ: {(locationScoreData.categories.find(category => category.name === "Economy").score_out_of_10 * 10).toFixed(0)}</h2>
+                    <h2>Internet: {(locationScoreData.categories.find(category => category.name === "Internet Access").score_out_of_10 * 10).toFixed(0)}</h2>
                   </span>
                   )}
                 </div>
@@ -104,30 +133,38 @@ function App() {
                   aria-describedby="search-addon" />
                 </div>
               </div>
-              <div className="beforeTitle">
-                <h1>It is currently...</h1>
-                <h1>4:30pm on July 27th, 2023</h1>
-                <h1>in...</h1>
-              </div>
+
+              {timeData.length !== 0 &&
+                <div className="beforeTitle">
+                  <h1>{timeData.time_12}</h1>
+                  <h1>{timeData.date}</h1>
+                  <h1>{timeData.geo.country}</h1>
+                </div>
+              }
             </div>
           </div>
 
           <div className="col-lg-4 order-lg-3 col-12 order-3">
 
-            {safetyScoreData.length !== 0 &&
+            {locationScoreData.length !== 0 && (
               <div className="safeScore">
                 <h1>Safety Score</h1>
                 <div className="circle1">
-                  <h1>55°</h1>
-                  <span className="popup2">
-                    <h2>Bike Score: </h2>
-                    <h2>Transit Score: </h2>
-                  </span>
+                  {locationScoreData.categories ? (
+                    <h1>{(locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 * 10).toFixed(0)}</h1>
+                  ) : (<h1 className="error1">N/A</h1>)}
+                  {locationScoreData.categories ? (
+                    <span className="popup2">
+                      <h2>TC: {(locationScoreData.categories.find(category => category.name === "Travel Connectivity").score_out_of_10 * 10).toFixed(0)}</h2>
+                      <h2>Internet: {(locationScoreData.categories.find(category => category.name === "Internet Access").score_out_of_10 * 10).toFixed(0)}</h2>
+                      <h2>Environment: {(locationScoreData.categories.find(category => category.name === "Environmental Quality").score_out_of_10 * 10).toFixed(0)}</h2>
+                    </span>
+                  ) : null}
                 </div>
               </div>
-            }
+            )}
 
-            {safetyScoreData.length === 0 &&
+            {locationScoreData.length === 0 &&
               <div className="safeScore">
               <h1>Safety Score</h1>
                 <div className="circle1">
