@@ -91,11 +91,11 @@ function App() {
 
             {locationScoreData.length !== 0 &&
               <div className="locationScore">
-              <h1>Location Score</h1>
-                <div className="circle1" style={{ backgroundColor: locationScoreData.teleport_city_score >= 75 ? 'green' : locationScoreData.teleport_city_score >= 50 ? 'yellow' : locationScoreData.teleport_city_score >= 25 ? 'orange' : 'red' }}>
+              <h1 className="generalColor">Location Score</h1>
+                <div className="circle1" style={{ backgroundColor: locationScoreData.teleport_city_score >= 75 ? '#d0e1a7' : locationScoreData.teleport_city_score >= 50 ? '#ffde89' : locationScoreData.teleport_city_score >= 25 ? '#ffc889' : '#fa9f8e' }}>
                   <h1>{locationScoreData.teleport_city_score.toFixed()}</h1>
                   {locationScoreData.teleport_city_score && locationScoreData.categories && (
-                  <span className="popup1" style={{ backgroundColor: locationScoreData.teleport_city_score >= 75 ? 'green' : locationScoreData.teleport_city_score >= 50 ? 'yellow' : locationScoreData.teleport_city_score >= 25 ? 'orange' : 'red' }}>
+                  <span className="popup1" style={{ backgroundColor: locationScoreData.teleport_city_score >= 75 ? '#d0e1a7' : locationScoreData.teleport_city_score >= 50 ? '#ffde89' : locationScoreData.teleport_city_score >= 25 ? '#ffc889' : '#fa9f8e' }}>
                     <h2>L&C: {(locationScoreData.categories.find(category => category.name === "Leisure & Culture").score_out_of_10 * 10).toFixed(0)}</h2>
                     <h2>Outdoors: {(locationScoreData.categories.find(category => category.name === "Outdoors").score_out_of_10 * 10).toFixed(0)}</h2>
                     <h2>Taxes: {(locationScoreData.categories.find(category => category.name === "Taxation").score_out_of_10 * 10).toFixed(0)}</h2>
@@ -109,7 +109,7 @@ function App() {
 
             {locationScoreData.length === 0 &&
               <div className="locationScore">
-              <h1>Location Score</h1>
+              <h1 className="generalColor">Location Score</h1>
                 <div className="circle1">
                   <h1 className="error1">N/A</h1>
                 </div>
@@ -136,9 +136,9 @@ function App() {
 
               {timeData.length !== 0 &&
                 <div className="beforeTitle">
-                  <h1>{timeData.time_12}</h1>
-                  <h1>{timeData.date}</h1>
-                  <h1>{timeData.geo.country}</h1>
+                  <h1 className="generalColor">{timeData.time_12}</h1>
+                  <h1 className="generalColor">{timeData.date}</h1>
+                  <h1 className="generalColor">{timeData.geo.country}</h1>
                 </div>
               }
             </div>
@@ -148,13 +148,13 @@ function App() {
 
             {locationScoreData.length !== 0 && (
               <div className="safeScore">
-                <h1>Safety Score</h1>
-                <div className="circle1" style={{ backgroundColor: locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 >= 7.5 ? 'green' : locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 >= 5.0 ? 'yellow' : locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 >= 2.5 ? 'orange' : 'red' }}>
+                <h1 className="generalColor">Safety Score</h1>
+                <div className="circle1" style={{ backgroundColor: locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 >= 7.5 ? '#d0e1a7' : locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 >= 5.0 ? '#ffde89' : locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 >= 2.5 ? '#ffc889' : '#fa9f8e' }}>
                   {locationScoreData.categories ? (
                     <h1>{(locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 * 10).toFixed(0)}</h1>
                   ) : (<h1 className="error1">N/A</h1>)}
                   {locationScoreData.categories ? (
-                    <span className="popup2" style={{ backgroundColor: locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 >= 7.5 ? 'green' : locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 >= 5.0 ? 'yellow' : locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 >= 2.5 ? 'orange' : 'red' }}>
+                    <span className="popup2" style={{ backgroundColor: locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 >= 7.5 ? '#d0e1a7' : locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 >= 5.0 ? '#ffde89' : locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 >= 2.5 ? '#ffc889' : '#fa9f8e' }}>
                       <h2>TC: {(locationScoreData.categories.find(category => category.name === "Travel Connectivity").score_out_of_10 * 10).toFixed(0)}</h2>
                       <h2>Internet: {(locationScoreData.categories.find(category => category.name === "Internet Access").score_out_of_10 * 10).toFixed(0)}</h2>
                       <h2>Environment: {(locationScoreData.categories.find(category => category.name === "Environmental Quality").score_out_of_10 * 10).toFixed(0)}</h2>
@@ -166,7 +166,7 @@ function App() {
 
             {locationScoreData.length === 0 &&
               <div className="safeScore">
-              <h1>Safety Score</h1>
+              <h1 className="generalColor">Safety Score</h1>
                 <div className="circle1">
                   <h1 className="error1">N/A</h1>
                 </div>
@@ -183,7 +183,7 @@ function App() {
 
             {newsData.length !== 0 &&
             <div className="news">
-              <h1>News</h1>
+              <h1 className="generalColor">News</h1>
               <div className="square">
               {newsData.length !== 0 && newsData.slice(0, 5).map((article, index) => (
                 <a key={article.url} href={article.url} target="_blank" rel="noopener noreferrer">
@@ -196,7 +196,7 @@ function App() {
 
             {newsData.length === 0 &&
             <div className="news">
-              <h1>News</h1>
+              <h1 className="generalColor">News</h1>
               <div className="square">
                 <h1 className="error1">No news for this area</h1>
               </div>
@@ -238,7 +238,7 @@ function App() {
 
             {breweryData.length !== 0 &&
               <div className="thingsToDo">
-                <h1>Breweries</h1>
+                <h1 className="generalColor">Breweries</h1>
                 <div className="square">
                 {breweryData.length !== 0 && breweryData.map((brews, index) => (
                   <a key={brews.url} href={brews.website_url} target="_blank" rel="noopener noreferrer">
@@ -251,7 +251,7 @@ function App() {
 
             {breweryData.length === 0 &&
             <div className="thingsToDo">
-              <h1>Breweries</h1>
+              <h1 className="generalColor">Breweries</h1>
               <div className="square">
                 <h1 className="error1">No breweries for this area</h1>
               </div>
