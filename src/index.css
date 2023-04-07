@@ -189,7 +189,7 @@ code {
   z-index: 1;
   border-radius: 30px;
   width: 40vh;
-  height: 32vh;
+  height: 35vh;
   background-color: aqua;
   border: 3px solid black;
 }
@@ -206,7 +206,7 @@ code {
   z-index: 1;
   border-radius: 30px;
   width: 45vh;
-  height: 43vh;
+  height: 22vh;
   right: 30vh;
   background-color: aqua;
   border: 3px solid black;

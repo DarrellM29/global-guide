@@ -92,10 +92,10 @@ function App() {
             {locationScoreData.length !== 0 &&
               <div className="locationScore">
               <h1>Location Score</h1>
-                <div className="circle1">
+                <div className="circle1" style={{ backgroundColor: locationScoreData.teleport_city_score >= 75 ? 'green' : locationScoreData.teleport_city_score >= 50 ? 'yellow' : locationScoreData.teleport_city_score >= 25 ? 'orange' : 'red' }}>
                   <h1>{locationScoreData.teleport_city_score.toFixed()}</h1>
                   {locationScoreData.teleport_city_score && locationScoreData.categories && (
-                  <span className="popup1">
+                  <span className="popup1" style={{ backgroundColor: locationScoreData.teleport_city_score >= 75 ? 'green' : locationScoreData.teleport_city_score >= 50 ? 'yellow' : locationScoreData.teleport_city_score >= 25 ? 'orange' : 'red' }}>
                     <h2>L&C: {(locationScoreData.categories.find(category => category.name === "Leisure & Culture").score_out_of_10 * 10).toFixed(0)}</h2>
                     <h2>Outdoors: {(locationScoreData.categories.find(category => category.name === "Outdoors").score_out_of_10 * 10).toFixed(0)}</h2>
                     <h2>Taxes: {(locationScoreData.categories.find(category => category.name === "Taxation").score_out_of_10 * 10).toFixed(0)}</h2>
@@ -149,12 +149,12 @@ function App() {
             {locationScoreData.length !== 0 && (
               <div className="safeScore">
                 <h1>Safety Score</h1>
-                <div className="circle1">
+                <div className="circle1" style={{ backgroundColor: locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 >= 7.5 ? 'green' : locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 >= 5.0 ? 'yellow' : locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 >= 2.5 ? 'orange' : 'red' }}>
                   {locationScoreData.categories ? (
                     <h1>{(locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 * 10).toFixed(0)}</h1>
                   ) : (<h1 className="error1">N/A</h1>)}
                   {locationScoreData.categories ? (
-                    <span className="popup2">
+                    <span className="popup2" style={{ backgroundColor: locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 >= 7.5 ? 'green' : locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 >= 5.0 ? 'yellow' : locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 >= 2.5 ? 'orange' : 'red' }}>
                       <h2>TC: {(locationScoreData.categories.find(category => category.name === "Travel Connectivity").score_out_of_10 * 10).toFixed(0)}</h2>
                       <h2>Internet: {(locationScoreData.categories.find(category => category.name === "Internet Access").score_out_of_10 * 10).toFixed(0)}</h2>
                       <h2>Environment: {(locationScoreData.categories.find(category => category.name === "Environmental Quality").score_out_of_10 * 10).toFixed(0)}</h2>
