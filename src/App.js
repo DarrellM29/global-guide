@@ -227,7 +227,7 @@ function App() {
                 </div>
                 <div className="circle2">
                   <div className='text'>
-                    <h2 className="error1">Not Available</h2>
+                    <h2 className="error2">Not Available</h2>
                   </div>
                 </div>
               </div>
