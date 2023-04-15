@@ -10,6 +10,9 @@ function App() {
   const [breweryData, setBreweryData] = useState([])
   const [locationScoreData, setLocationScoreData] = useState([])
   const [timeData, setTimeData] = useState([])
+  const [hotelData, setHotelData] = useState([])
+  const [sitesData, setSitesData] = useState([])
+  const [attractionsData, setAttractionsData] = useState([])
   const [location, setLocation] = useState('')
 
   const refresh = () => {
@@ -17,7 +20,37 @@ function App() {
     setNewsData([])
     setBreweryData([])
     setTimeData([])
+    setHotelData([])
+    setSitesData([])
+    setAttractionsData([])
     setLocationScoreData([])
+  }
+
+  const searchTravel = (timeData) => {
+    const hotelUrl = `https://api.geoapify.com/v2/places?categories=accommodation.hotel&bias=proximity:${timeData.geo.longitude},${timeData.geo.latitude}&limit=10&apiKey=bebb3860b6f74034ae8c146ef20ce2d8`
+    const sitesUrl = `https://api.geoapify.com/v2/places?categories=tourism.sights&bias=proximity:${timeData.geo.longitude},${timeData.geo.latitude}&limit=10&apiKey=bebb3860b6f74034ae8c146ef20ce2d8`
+    const attractionsUrl = `https://api.geoapify.com/v2/places?categories=tourism.attraction&bias=proximity:${timeData.geo.longitude},${timeData.geo.latitude}&limit=10&apiKey=bebb3860b6f74034ae8c146ef20ce2d8`
+
+    axios.get(hotelUrl).then((response) => {
+      setHotelData(response.data)
+      console.log(response.data)
+    }).catch((error) => {
+      console.log(error)
+    })
+
+    axios.get(sitesUrl).then((response) => {
+      setSitesData(response.data)
+      console.log(response.data)
+    }).catch((error) => {
+      console.log(error)
+    })
+
+    axios.get(attractionsUrl).then((response) => {
+      setAttractionsData(response.data)
+      console.log(response.data)
+    }).catch((error) => {
+      console.log(error)
+    })
   }
 
   const searchLocation = (event) => {
@@ -31,9 +64,11 @@ function App() {
       const locationScoreUrl = `https://api.teleport.org/api/urban_areas/slug:${location.toLowerCase().replace(/\s+/g, '-')}/scores/`
       const timeUrl = `https://api.ipgeolocation.io/timezone?apiKey=8ad77b2dcf574924a6a29e8500326b37&location=${location}`
 
+
       axios.get(timeUrl).then((response) => {
         setTimeData(response.data)
         console.log(response.data)
+        searchTravel(response.data)
       }).catch((error) => {
         console.log(error)
       })
@@ -206,6 +241,7 @@ function App() {
           </div>
 
           <div className="col-lg-4 order-lg-2 col-12 order-1">
+            
             {weatherData.name !== undefined &&
             <div className="weatherTitle">
               <div className="theTitle">
@@ -254,6 +290,91 @@ function App() {
               <h1 className="generalColor">Breweries</h1>
               <div className="square">
                 <h1 className="error1">No breweries for this area</h1>
+              </div>
+            </div>
+            }
+
+          </div>
+
+        </div>
+
+        <div className="row" id='row3'>
+
+          <div className="col-lg-4 order-lg-1 col-12 order-2">
+
+          {hotelData.length !== 0 &&
+              <div className="thingsToDo">
+                <h1 className="generalColor">Hotels</h1>
+                <div className="square2">
+                {hotelData.features.slice(0, 5).map((hotels, index) => (
+                  <div key={index}>
+                    <h1>{hotels.properties.name}</h1>
+                    <h2>{hotels.properties.address_line2}</h2>
+                  </div>
+                ))}
+                </div>
+              </div>
+            }
+
+            {hotelData.length === 0 &&
+            <div className="thingsToDo">
+              <h1 className="generalColor">Hotels</h1>
+              <div className="square2">
+                <h1 className="error1">No sites for this area</h1>
+              </div>
+            </div>
+            }
+
+          </div>
+
+          <div className="col-lg-4 order-lg-2 col-12 order-1">
+
+            {sitesData.length !== 0 &&
+              <div className="thingsToDo">
+                <h1 className="generalColor">Sites</h1>
+                <div className="square2">
+                {sitesData.features.slice(0, 5).map((sites, index) => (
+                  <div key={index}>
+                    <h1>{sites.properties.address_line1}</h1>
+                    <h2>{sites.properties.address_line2}</h2>
+                  </div>
+                ))}
+                </div>
+              </div>
+            }
+
+            {sitesData.length === 0 &&
+            <div className="thingsToDo">
+              <h1 className="generalColor">Sites</h1>
+              <div className="square2">
+                <h1 className="error1">No sites for this area</h1>
+              </div>
+            </div>
+            }
+
+          </div>
+
+          <div className="col-lg-4 order-lg-3 col-12 order-3">
+
+            {attractionsData.length !== 0 &&
+              <div className="thingsToDo">
+                <h1 className="generalColor">Attractions</h1>
+                <div className="square2">
+                {attractionsData.features.slice(0, 5).map((attractions, index) => (
+                  <div key={index}>
+                    <h1>{attractions.properties.name}</h1>
+                    <h2>{attractions.properties.address_line2}</h2>
+                  </div>
+                ))}
+                </div>
+              </div>
+            }
+
+            {attractionsData.length === 0 &&
+            <div className="thingsToDo">
+              <h1 className="generalColor">Attractions</h1>
+              <div className="square2">
+                <h1 className="error1">No attractions for this area</h1>
               </div>
             </div>
             }
