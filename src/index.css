@@ -20,7 +20,7 @@ code {
 
 .App {
   width: 100%;
-  height: 205vh;
+  height: 235vh;
   border: 3px solid black;
   text-align: center;
   background-color: #150050;
@@ -35,7 +35,7 @@ code {
 }
 
 #row3{
-  height: 70vh;
+  height: 90vh;
 }
 
 .logoSearch {
@@ -138,15 +138,30 @@ code {
   border-radius: 30px;
   padding: 2vh;
   text-align: center;
-  height: 60vh;
+  height: 75vh;
   width: 100%;
   color: white;
   background-color: #8d8c8a;
 }
 
 .square h1{
-  padding-top: vh;
-  font-size: 3.5vh;
+  margin-top: 2vh;
+  font-size: 3vh;
+}
+
+.square h2{
+  margin-top: -2vh;
+  font-size: 2vh;
+}
+
+.news .square h2{
+  margin-top: -4vh;
+  font-size: 2vh;
+}
+
+.thingsToDo .square h2{
+  margin-top: -3vh;
+  font-size: 2vh;
 }
 
 .square2 {
@@ -154,7 +169,7 @@ code {
   border-radius: 30px;
   padding: 2vh;
   text-align: center;
-  height: 85vh;
+  height: 95vh;
   width: 100%;
   color: white;
   background-color: #8d8c8a;
@@ -168,6 +183,47 @@ code {
 .square2 h2{
   margin-top: -2vh;
   font-size: 2vh;
+}
+
+.square3 h1{
+  margin-bottom: -0.5vh;
+}
+
+#weatherRow1 h1{
+  font-size: 4.5vh;
+}
+#weatherRow2 h1{
+  font-size: 4.5vh;
+}
+
+#weather5Day {
+  border: 3px solid #3F0071;
+  border-radius: 15px;
+  width: 17.5%;
+  height: 28vh;
+}
+
+#weatherRow1 {
+  height: 30vh;
+  width: 100%;
+}
+
+#centerer {
+  margin-left: 7.5%;
+  border: 3px solid #3F0071;
+  border-radius: 15px;
+  width: 17.5%;
+  height: 28vh;
+}
+
+#weatherRow2 {
+  height: 30vh;
+  width: 100%;
+}
+
+.block {
+  border: 2px solid #3F0071;
+  border-radius: 15px;
 }
 
 .theTitle{
@@ -227,46 +283,21 @@ code {
   font-size: 5vh;
 }
 
+.circle2:hover .popup1{
+  visibility: visible;
+}
+
 .popup1{
   visibility: hidden;
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   border-radius: 30px;
-  width: 40vh;
-  height: 35vh;
+  width: 95%;
+  right: 2.5%;
+  top: 2%;
+  height: 60vh;
   border: 3px solid #3F0071;
-  background-color: rgba(255, 255, 255, 0.6);
-}
-
-.popup1 h2{
-  width: 300px;
-  text-align: left;
-  padding-left: 3vh;
-}
-
-.popup2{
-  visibility: hidden;
-  position: fixed;
-  z-index: 1;
-  border-radius: 30px;
-  width: 45vh;
-  height: 22vh;
-  right: 30vh;
-  border: 3px solid #3F0071;
-}
-
-.popup2 h2{
-  width: 300px;
-  text-align: left;
-  padding-left: 3vh;
-}
-
-.circle1:hover .popup1{
-  visibility: visible;
-}
-
-.circle1:hover .popup2{
-  visibility: visible;
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 /*Media*/

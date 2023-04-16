@@ -13,6 +13,7 @@ function App() {
   const [hotelData, setHotelData] = useState([])
   const [sitesData, setSitesData] = useState([])
   const [attractionsData, setAttractionsData] = useState([])
+  const [weather5DayData, setWeather5DayData] = useState([])
   const [location, setLocation] = useState('')
 
   const refresh = () => {
@@ -23,6 +24,7 @@ function App() {
     setHotelData([])
     setSitesData([])
     setAttractionsData([])
+    setWeather5DayData([])
     setLocationScoreData([])
   }
 
@@ -63,7 +65,7 @@ function App() {
       const breweryUrl = `https://api.openbrewerydb.org/breweries?by_city=${location}&per_page=5`
       const locationScoreUrl = `https://api.teleport.org/api/urban_areas/slug:${location.toLowerCase().replace(/\s+/g, '-')}/scores/`
       const timeUrl = `https://api.ipgeolocation.io/timezone?apiKey=8ad77b2dcf574924a6a29e8500326b37&location=${location}`
-
+      const weather5DayUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=f3ddae2d1bfe3052a42b109ae6f7ba02`
 
       axios.get(timeUrl).then((response) => {
         setTimeData(response.data)
@@ -76,30 +78,37 @@ function App() {
       axios.get(weatherUrl).then((response) => {
         setWeatherData(response.data)
         console.log(response.data)
-        }).catch((error) => {
-            console.log(error)
-        })
+      }).catch((error) => {
+          console.log(error)
+      })
 
-        axios.get(newsUrl).then((response) => {
-            setNewsData(response.data.articles)
-            console.log(response.data.articles)
-        }).catch((error) => {
-            console.log(error)
-        })
+      axios.get(newsUrl).then((response) => {
+          setNewsData(response.data.articles)
+          console.log(response.data.articles)
+      }).catch((error) => {
+          console.log(error)
+      })
 
-        axios.get(breweryUrl).then((response) => {
-            setBreweryData(response.data)
-            console.log(response.data)
-        }).catch((error) => {
-            console.log(error)
-        })
+      axios.get(breweryUrl).then((response) => {
+          setBreweryData(response.data)
+          console.log(response.data)
+      }).catch((error) => {
+          console.log(error)
+      })
 
-        axios.get(locationScoreUrl).then((response) => {
-            setLocationScoreData(response.data)
-            console.log(response.data)
-        }).catch((error) => {
-            console.log(error)
-        })
+      axios.get(locationScoreUrl).then((response) => {
+          setLocationScoreData(response.data)
+          console.log(response.data)
+      }).catch((error) => {
+          console.log(error)
+      })
+
+      axios.get(weather5DayUrl).then((response) => {
+        setWeather5DayData(response.data)
+        console.log(response.data)
+    }).catch((error) => {
+        console.log(error)
+    })
 
       setLocation('')
     }
@@ -129,15 +138,6 @@ function App() {
               <h1 className="generalColor">Location Score</h1>
                 <div className="circle1" style={{ backgroundColor: locationScoreData.teleport_city_score >= 75 ? '#d0e1a7' : locationScoreData.teleport_city_score >= 50 ? '#ffde89' : locationScoreData.teleport_city_score >= 25 ? '#ffc889' : '#fa9f8e' }}>
                   <h1>{locationScoreData.teleport_city_score.toFixed()}</h1>
-                  {locationScoreData.teleport_city_score && locationScoreData.categories && (
-                  <span className="popup1" style={{ backgroundColor: locationScoreData.teleport_city_score >= 75 ? '#d0e1a7' : locationScoreData.teleport_city_score >= 50 ? '#ffde89' : locationScoreData.teleport_city_score >= 25 ? '#ffc889' : '#fa9f8e' }}>
-                    <h2>L&C: {(locationScoreData.categories.find(category => category.name === "Leisure & Culture").score_out_of_10 * 10).toFixed(0)}</h2>
-                    <h2>Outdoors: {(locationScoreData.categories.find(category => category.name === "Outdoors").score_out_of_10 * 10).toFixed(0)}</h2>
-                    <h2>Taxes: {(locationScoreData.categories.find(category => category.name === "Taxation").score_out_of_10 * 10).toFixed(0)}</h2>
-                    <h2>Econ: {(locationScoreData.categories.find(category => category.name === "Economy").score_out_of_10 * 10).toFixed(0)}</h2>
-                    <h2>Internet: {(locationScoreData.categories.find(category => category.name === "Internet Access").score_out_of_10 * 10).toFixed(0)}</h2>
-                  </span>
-                  )}
                 </div>
               </div>
             }
@@ -188,13 +188,6 @@ function App() {
                   {locationScoreData.categories ? (
                     <h1>{(locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 * 10).toFixed(0)}</h1>
                   ) : (<h1 className="error1">N/A</h1>)}
-                  {locationScoreData.categories ? (
-                    <span className="popup2" style={{ backgroundColor: locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 >= 7.5 ? '#d0e1a7' : locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 >= 5.0 ? '#ffde89' : locationScoreData.categories.find(category => category.name === "Safety").score_out_of_10 >= 2.5 ? '#ffc889' : '#fa9f8e' }}>
-                      <h2>TC: {(locationScoreData.categories.find(category => category.name === "Travel Connectivity").score_out_of_10 * 10).toFixed(0)}</h2>
-                      <h2>Internet: {(locationScoreData.categories.find(category => category.name === "Internet Access").score_out_of_10 * 10).toFixed(0)}</h2>
-                      <h2>Environment: {(locationScoreData.categories.find(category => category.name === "Environmental Quality").score_out_of_10 * 10).toFixed(0)}</h2>
-                    </span>
-                  ) : null}
                 </div>
               </div>
             )}
@@ -221,9 +214,12 @@ function App() {
               <h1 className="generalColor">News</h1>
               <div className="square">
               {newsData.length !== 0 && newsData.slice(0, 5).map((article, index) => (
+                <div className="block">
                 <a key={article.url} href={article.url} target="_blank" rel="noopener noreferrer">
-                  <h1>{article.source.name} - {article.title.slice(0, 25)}</h1>
+                  <h1>{article.source.name}</h1>
+                  <h2>{article.title.slice(0, 60)}</h2>
                 </a>
+                </div>
               ))}
               </div>
             </div>
@@ -252,6 +248,68 @@ function App() {
                   {weatherData.main ? <h1>{weatherData.main.temp.toFixed()}°F</h1> : null}
                   {weatherData.weather ? <h2>{weatherData.weather[0].main}</h2> : null}
                 </div>
+                <span className="popup1">
+              
+                {weather5DayData.length !== 0 &&
+                <div className="square3">
+                  <div className="row" id="weatherRow1">
+                    <div className="col-lg-2 col-12 order-lg-1" id="centerer">
+                      <h1>{weather5DayData.list[1].dt_txt}</h1>
+                      <h1>{weather5DayData.list[1].main.temp.toFixed()}°F</h1>
+                      <h1>{weather5DayData.list[1].weather[0].main}</h1>
+                    </div>
+                    <div className="col-lg-2 col-12 order-lg-2" id="weather5Day">
+                      <h1>{weather5DayData.list[5].dt_txt}</h1>
+                      <h1>{weather5DayData.list[5].main.temp.toFixed()}°F</h1>
+                      <h1>{weather5DayData.list[5].weather[0].main}</h1>
+                    </div>
+                    <div className="col-lg-2 col-12 order-lg-3" id="weather5Day">
+                      <h1>{weather5DayData.list[9].dt_txt}</h1>
+                      <h1>{weather5DayData.list[9].main.temp.toFixed()}°F</h1>
+                      <h1>{weather5DayData.list[9].weather[0].main}</h1>
+                    </div>
+                    <div className="col-lg-2 col-12 order-lg-4" id="weather5Day">
+                      <h1>{weather5DayData.list[13].dt_txt}</h1>
+                      <h1>{weather5DayData.list[13].main.temp.toFixed()}°F</h1>
+                      <h1>{weather5DayData.list[13].weather[0].main}</h1>
+                    </div>
+                    <div className="col-lg-2 col-12 order-lg-5" id="weather5Day">
+                      <h1>{weather5DayData.list[17].dt_txt}</h1>
+                      <h1>{weather5DayData.list[17].main.temp.toFixed()}°F</h1>
+                      <h1>{weather5DayData.list[17].weather[0].main}</h1>
+                    </div>
+                  </div>
+
+                  <div className="row" id="weatherRow2">
+                    <div className="col-lg-2 col-md-2 col-sm-2 col-12 order-lg-1" id="centerer">
+                      <h1>{weather5DayData.list[21].dt_txt}</h1>
+                      <h1>{weather5DayData.list[21].main.temp.toFixed()}°F</h1>
+                      <h1>{weather5DayData.list[21].weather[0].main}</h1>
+                    </div>
+                    <div className="col-lg-2 col-md-2 col-sm-2 col-12 order-lg-2" id="weather5Day">
+                      <h1>{weather5DayData.list[25].dt_txt}</h1>
+                      <h1>{weather5DayData.list[25].main.temp.toFixed()}°F</h1>
+                      <h1>{weather5DayData.list[25].weather[0].main}</h1>
+                    </div>
+                    <div className="col-lg-2 col-md-2 col-sm-2 col-12 order-lg-3" id="weather5Day">
+                      <h1>{weather5DayData.list[29].dt_txt}</h1>
+                      <h1>{weather5DayData.list[29].main.temp.toFixed()}°F</h1>
+                      <h1>{weather5DayData.list[29].weather[0].main}</h1>
+                    </div>
+                    <div className="col-lg-2 col-md-2 col-sm-2 col-12 order-lg-4" id="weather5Day">
+                      <h1>{weather5DayData.list[33].dt_txt}</h1>
+                      <h1>{weather5DayData.list[33].main.temp.toFixed()}°F</h1>
+                      <h1>{weather5DayData.list[33].weather[0].main}</h1>
+                    </div>
+                    <div className="col-lg-2 col-md-2 col-sm-2 col-12 order-lg-5" id="weather5Day">
+                      <h1>{weather5DayData.list[37].dt_txt}</h1>
+                      <h1>{weather5DayData.list[37].main.temp.toFixed()}°F</h1>
+                      <h1>{weather5DayData.list[37].weather[0].main}</h1>
+                    </div>
+                  </div>
+                </div>
+                }
+                </span>
               </div>
             </div>
             }
@@ -277,9 +335,12 @@ function App() {
                 <h1 className="generalColor">Breweries</h1>
                 <div className="square">
                 {breweryData.length !== 0 && breweryData.map((brews, index) => (
+                  <div className="block">
                   <a key={brews.url} href={brews.website_url} target="_blank" rel="noopener noreferrer">
-                    <h1>{brews.name} - {brews.street}</h1>
+                    <h1>{brews.name}</h1>
+                    <h2>{brews.street}</h2>
                   </a>
+                  </div>
                 ))}
                 </div>
               </div>
@@ -307,7 +368,7 @@ function App() {
                 <h1 className="generalColor">Hotels</h1>
                 <div className="square2">
                 {hotelData.features.slice(0, 5).map((hotels, index) => (
-                  <div key={index}>
+                  <div className="block" key={index}>
                     <h1>{hotels.properties.name}</h1>
                     <h2>{hotels.properties.address_line2}</h2>
                   </div>
@@ -334,7 +395,7 @@ function App() {
                 <h1 className="generalColor">Sites</h1>
                 <div className="square2">
                 {sitesData.features.slice(0, 5).map((sites, index) => (
-                  <div key={index}>
+                  <div className="block" key={index}>
                     <h1>{sites.properties.address_line1}</h1>
                     <h2>{sites.properties.address_line2}</h2>
                   </div>
@@ -361,7 +422,7 @@ function App() {
                 <h1 className="generalColor">Attractions</h1>
                 <div className="square2">
                 {attractionsData.features.slice(0, 5).map((attractions, index) => (
-                  <div key={index}>
+                  <div className="block" key={index}>
                     <h1>{attractions.properties.name}</h1>
                     <h2>{attractions.properties.address_line2}</h2>
                   </div>
