@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import Popup from './Popup'
 
 
 function App() {
-  
   
   const [weatherData,setWeatherData] = useState({})
   const [newsData,setNewsData] = useState([])
@@ -15,6 +15,8 @@ function App() {
   const [attractionsData, setAttractionsData] = useState([])
   const [weather5DayData, setWeather5DayData] = useState([])
   const [location, setLocation] = useState('')
+
+  const [buttonPopup, setButtonPopup] = useState(false)
 
   const refresh = () => {
     setWeatherData({})
@@ -121,9 +123,26 @@ function App() {
 
         <div className="row" id='row1'>
 
-          <div className="col-lg-12">
+          <div className="col-lg-10 order-lg-1 col-12 order-1">
             <div className="logoSearch">
               <h1>GlobalGuide</h1>
+            </div>
+          </div>
+
+          <div className="col-lg-2 order-lg-2 col-12 order-2">
+            <div className="infoPopup">
+              <button onClick={() => setButtonPopup(true)}>More Information</button>
+              <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+                <h1><u>Global Guide Information</u></h1>
+                <h2>Location Score:<h3> The location score is calculated off the scores for housing, cost of living, startups, venture capital, travel connectivity, commute, business freedom, safety, healthcare, education, environmental quality, economy, taxation and internet access. For more information please visit <a href='https://developers.teleport.org/api/getting_started/'>Teleport Public APIs</a></h3></h2>
+                <h2>Safety Score:<h3>Ex</h3></h2>
+                <h2>News:<h3>Ex</h3></h2>
+                <h2>Breweries:<h3>Ex</h3></h2>
+                <h2>Weather:<h3>Ex</h3></h2>
+                <h2>Hotels:<h3>Ex</h3></h2>
+                <h2>Sites:<h3>Ex</h3></h2>
+                <h2>Attractions:<h3>Ex</h3></h2>
+              </Popup>
             </div>
           </div>
 

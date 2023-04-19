@@ -44,7 +44,38 @@ code {
 
 .logoSearch h1{
   font-size: 3.5vh;
+  margin-left: 20%;
   color: #00FFD1;
+}
+
+.infoPopup {
+  margin-top: 1vh;
+}
+
+.infoPopup button {
+  margin-left: 7vh;
+  padding: 1vh;
+  color: #00FFD1;
+  background-color: #8d8c8a;
+  border: 3px solid #3F0071;
+  border-radius: 15%;
+}
+
+.infoPopup h1 {
+  margin-top: 1vh;
+  margin-bottom: 2vh;
+}
+
+.infoPopup h2 {
+  font-size: 3vh;
+  text-align: left;
+  font-weight: bold;
+}
+
+.infoPopup h3 {
+  display: inline;
+  font-size: 2vh;
+  text-align: left;
 }
 
 .locationScore {
