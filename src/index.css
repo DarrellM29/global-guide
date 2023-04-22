@@ -54,7 +54,7 @@ code {
 
 .infoPopup button {
   margin-left: 7vh;
-  padding: 0.1vh;
+  padding: 0.5vh;
   color: #00FFD1;
   background-color: #8d8c8a;
   border: 3px solid #3F0071;
@@ -141,6 +141,11 @@ code {
 .news h1 {
   padding-bottom: 1vh;
   height: 8vh;
+  color: white;
+}
+
+.news h2 {
+  color: white;
 }
 
 .error1 {
@@ -162,6 +167,20 @@ code {
 .thingsToDo h1 {
   padding-bottom: 1vh;
   height: 8vh;
+  color: white;
+}
+
+.thingsToDo h2 {
+  color: white;
+}
+
+.thingsToDo button {
+  margin-top: 3vh;
+  padding: 2vh;
+  color: white;
+  background-color: #3F0071;
+  border: 3px solid #00FFD1;
+  border-radius: 25%;
 }
 
 .square {
@@ -255,6 +274,17 @@ code {
 .block {
   border: 2px solid #3F0071;
   border-radius: 15px;
+}
+
+.block2 {
+  border: 2px solid #3F0071;
+  border-radius: 15px;
+  height: 7vh;
+}
+
+.block2 h1 {
+  font-size: 2vh;
+  color: #3F0071;
 }
 
 .theTitle{

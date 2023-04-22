@@ -16,7 +16,11 @@ function App() {
   const [weather5DayData, setWeather5DayData] = useState([])
   const [location, setLocation] = useState('')
 
-  const [buttonPopup, setButtonPopup] = useState(false)
+  const [infoButtonPopup, setInfoButtonPopup] = useState(false)
+  const [breweriesButtonPopup, setBreweriesButtonPopup] = useState(false)
+  const [hotelsButtonPopup, setHotelsButtonPopup] = useState(false)
+  const [sitesButtonPopup, setSitesButtonPopup] = useState(false)
+  const [attractionsButtonPopup, setAttractionsButtonPopup] = useState(false)
   const [timeString, setTimeString] = useState(getTimeString());
 
   const refresh = () => {
@@ -80,7 +84,7 @@ function App() {
 
       const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
       const newsUrl = `https://newsapi.org/v2/top-headlines?q=${location}&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`
-      const breweryUrl = `https://api.openbrewerydb.org/breweries?by_city=${location}&per_page=5`
+      const breweryUrl = `https://api.openbrewerydb.org/breweries?by_city=${location}&per_page=10`
       const locationScoreUrl = `https://api.teleport.org/api/urban_areas/slug:${location.toLowerCase().replace(/\s+/g, '-')}/scores/`
       const timeUrl = `https://api.ipgeolocation.io/timezone?apiKey=8ad77b2dcf574924a6a29e8500326b37&location=${location}`
       const weather5DayUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&units=imperial&appid=f3ddae2d1bfe3052a42b109ae6f7ba02`
@@ -147,8 +151,8 @@ function App() {
 
           <div className="col-lg-2 order-lg-2 col-12 order-2">
             <div className="infoPopup">
-              <button onClick={() => setButtonPopup(true)}>More Information</button>
-              <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+              <button onClick={() => setInfoButtonPopup(true)}>More Information</button>
+              <Popup trigger={infoButtonPopup} setTrigger={setInfoButtonPopup}>
                 <h1><u>Global Guide Information</u></h1>
                 <h2>Location Score:<h3> The location score is calculated off the scores for housing, cost of living, startups, venture capital, travel connectivity, commute, business freedom, safety, healthcare, education, environmental quality, economy, taxation and internet access. For more information please visit <a href='https://developers.teleport.org/api/getting_started/'>Teleport Public APIs</a></h3></h2>
                 <h2>Safety Score:<h3>Ex</h3></h2>
@@ -369,14 +373,24 @@ function App() {
               <div className="thingsToDo">
                 <h1 className="generalColor">Breweries</h1>
                 <div className="square">
-                {breweryData.length !== 0 && breweryData.map((brews, index) => (
-                  <div className="block">
-                  <a key={brews.url} href={brews.website_url} target="_blank" rel="noopener noreferrer">
-                    <h1>{brews.name}</h1>
-                    <h2>{brews.street}</h2>
-                  </a>
-                  </div>
-                ))}
+                  {breweryData.length !== 0 && breweryData.slice(0, 5).map((brews, index) => (
+                    <div className="block">
+                    <a key={brews.url} href={brews.website_url} target="_blank" rel="noopener noreferrer">
+                      <h1>{brews.name}</h1>
+                      <h2>{brews.street}</h2>
+                    </a>
+                    </div>
+                  ))}
+                  <button onClick={() => setBreweriesButtonPopup(true)}>More</button>
+                  <Popup trigger={breweriesButtonPopup} setTrigger={setBreweriesButtonPopup}>
+                    {breweryData.length !== 0 && breweryData.map((brews, index) => (
+                      <div className="block2">
+                      <a key={brews.url} href={brews.website_url} target="_blank" rel="noopener noreferrer">
+                        <h1>{brews.name} - {brews.street}</h1>
+                      </a>
+                      </div>
+                    ))}
+                  </Popup>
                 </div>
               </div>
             }
@@ -402,12 +416,20 @@ function App() {
               <div className="thingsToDo">
                 <h1 className="generalColor">Hotels</h1>
                 <div className="square2">
-                {hotelData.features.slice(0, 5).map((hotels, index) => (
-                  <div className="block" key={index}>
-                    <h1>{hotels.properties.name}</h1>
-                    <h2>{hotels.properties.address_line2}</h2>
-                  </div>
-                ))}
+                  {hotelData.features.slice(0, 5).map((hotels, index) => (
+                    <div className="block" key={index}>
+                      <h1>{hotels.properties.name}</h1>
+                      <h2>{hotels.properties.address_line2}</h2>
+                    </div>
+                  ))}
+                  <button onClick={() => setHotelsButtonPopup(true)}>More</button>
+                  <Popup trigger={hotelsButtonPopup} setTrigger={setHotelsButtonPopup}>
+                    {hotelData.features.map((hotels, index) => (
+                      <div className="block2" key={index}>
+                        <h1>{hotels.properties.name} - {hotels.properties.address_line2}</h1>
+                      </div>
+                    ))}
+                  </Popup>
                 </div>
               </div>
             }
@@ -429,12 +451,20 @@ function App() {
               <div className="thingsToDo">
                 <h1 className="generalColor">Sites</h1>
                 <div className="square2">
-                {sitesData.features.slice(0, 5).map((sites, index) => (
-                  <div className="block" key={index}>
-                    <h1>{sites.properties.address_line1}</h1>
-                    <h2>{sites.properties.address_line2}</h2>
-                  </div>
-                ))}
+                  {sitesData.features.slice(0, 5).map((sites, index) => (
+                    <div className="block" key={index}>
+                      <h1>{sites.properties.address_line1}</h1>
+                      <h2>{sites.properties.address_line2}</h2>
+                    </div>
+                  ))}
+                  <button onClick={() => setSitesButtonPopup(true)}>More</button>
+                  <Popup trigger={sitesButtonPopup} setTrigger={setSitesButtonPopup}>
+                    {sitesData.features.map((sites, index) => (
+                      <div className="block2" key={index}>
+                        <h1>{sites.properties.address_line1} - {sites.properties.address_line2}</h1>
+                      </div>
+                    ))}
+                  </Popup>
                 </div>
               </div>
             }
@@ -456,12 +486,20 @@ function App() {
               <div className="thingsToDo">
                 <h1 className="generalColor">Attractions</h1>
                 <div className="square2">
-                {attractionsData.features.slice(0, 5).map((attractions, index) => (
-                  <div className="block" key={index}>
-                    <h1>{attractions.properties.name}</h1>
-                    <h2>{attractions.properties.address_line2}</h2>
-                  </div>
-                ))}
+                  {attractionsData.features.slice(0, 5).map((attractions, index) => (
+                    <div className="block" key={index}>
+                      <h1>{attractions.properties.name}</h1>
+                      <h2>{attractions.properties.address_line2}</h2>
+                    </div>
+                  ))}
+                  <button onClick={() => setAttractionsButtonPopup(true)}>More</button>
+                  <Popup trigger={attractionsButtonPopup} setTrigger={setAttractionsButtonPopup}>
+                    {attractionsData.features.map((attractions, index) => (
+                      <div className="block2" key={index}>
+                        <h1>{attractions.properties.name} - {attractions.properties.address_line2}</h1>
+                      </div>
+                    ))}
+                  </Popup>
                 </div>
               </div>
             }
