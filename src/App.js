@@ -154,14 +154,14 @@ function App() {
               <button onClick={() => setInfoButtonPopup(true)}>More Information</button>
               <Popup trigger={infoButtonPopup} setTrigger={setInfoButtonPopup}>
                 <h1><u>Global Guide Information</u></h1>
-                <h2>Location Score:<h3> The location score is calculated off the scores for housing, cost of living, startups, venture capital, travel connectivity, commute, business freedom, safety, healthcare, education, environmental quality, economy, taxation and internet access. For more information please visit <a href='https://developers.teleport.org/api/getting_started/'>Teleport Public APIs</a></h3></h2>
-                <h2>Safety Score:<h3>Ex</h3></h2>
-                <h2>News:<h3>Ex</h3></h2>
-                <h2>Breweries:<h3>Ex</h3></h2>
-                <h2>Weather:<h3>Ex</h3></h2>
-                <h2>Hotels:<h3>Ex</h3></h2>
-                <h2>Sites:<h3>Ex</h3></h2>
-                <h2>Attractions:<h3>Ex</h3></h2>
+                <h2>Location Score:<h3> The Location Score is calculated off the scores for housing, cost of living, startups, venture capital, travel connectivity, commute, business freedom, safety, healthcare, education, environmental quality, economy, taxation and internet access. For more information please visit <a href='https://developers.teleport.org/api/getting_started/'>Teleport Public APIs</a></h3></h2>
+                <h2>Safety Score:<h3>The Safety Score is based off of various factors such as crime rates, natural disasters, and political stability. For more information please visit <a href='https://developers.teleport.org/api/getting_started/'>Teleport Public APIs</a></h3></h2>
+                <h2>News:<h3>The News lists top headlining news based on the user-provided location. For more information please visit <a href='https://newsapi.org/docs/endpoints/top-headlines'>NewsAPI</a></h3></h2>
+                <h2>Breweries:<h3>The Breweries lists an up-to-date list of breweries, cideries, brewpubs, and bottleshops for the city requested by the user. For more information please visit <a href='https://www.openbrewerydb.org/faq'>OpenBreweryDB</a></h3></h2>
+                <h2>Weather:<h3>The Weather provides current weather for the user-provided location. If hovered over, it lists a 5 day / 12 hour forecast. For more information please visit <a href='https://openweathermap.org/forecast5'>OpenWeatherMap</a></h3></h2>
+                <h2>Hotels:<h3>The Hotels provides a list of hotels in a nearby radius. For more information please visit <a href='https://apidocs.geoapify.com/docs/places/#about'>GeoApify</a></h3></h2>
+                <h2>Sites:<h3>The Sites provides a list of sites such as castles, battlefields, ruines, bridges, and memorials in a nearby radius. For more information please visit <a href='https://apidocs.geoapify.com/docs/places/#about'>GeoApify</a></h3></h2>
+                <h2>Attractions:<h3>The Attractions provides a list of attractions such as artwork and viewpoints in a nearby radius. For more information please visit <a href='https://apidocs.geoapify.com/docs/places/#about'>GeoApify</a></h3></h2>
               </Popup>
             </div>
           </div>
