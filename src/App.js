@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Popup from './Popup'
 
@@ -17,6 +17,7 @@ function App() {
   const [location, setLocation] = useState('')
 
   const [buttonPopup, setButtonPopup] = useState(false)
+  const [timeString, setTimeString] = useState(getTimeString());
 
   const refresh = () => {
     setWeatherData({})
@@ -28,6 +29,21 @@ function App() {
     setAttractionsData([])
     setWeather5DayData([])
     setLocationScoreData([])
+  }
+
+  useEffect(() => {
+    // Update time string every minute
+    const intervalId = setInterval(() => {
+      setTimeString(getTimeString());
+    }, 60 * 1000);
+    return () => clearInterval(intervalId);
+  }, []);
+
+  function getTimeString() {
+    const date = new Date();
+    date.setMinutes(date.getMinutes() + 1);
+    const timeString = date.toLocaleString("en-US", {hour: "numeric", minute: "numeric", hour12: true});
+    return timeString;
   }
 
   const searchTravel = (timeData) => {
@@ -67,7 +83,7 @@ function App() {
       const breweryUrl = `https://api.openbrewerydb.org/breweries?by_city=${location}&per_page=5`
       const locationScoreUrl = `https://api.teleport.org/api/urban_areas/slug:${location.toLowerCase().replace(/\s+/g, '-')}/scores/`
       const timeUrl = `https://api.ipgeolocation.io/timezone?apiKey=8ad77b2dcf574924a6a29e8500326b37&location=${location}`
-      const weather5DayUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=f3ddae2d1bfe3052a42b109ae6f7ba02`
+      const weather5DayUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&units=imperial&appid=f3ddae2d1bfe3052a42b109ae6f7ba02`
 
       axios.get(timeUrl).then((response) => {
         setTimeData(response.data)
@@ -190,8 +206,8 @@ function App() {
 
               {timeData.length !== 0 &&
                 <div className="beforeTitle">
-                  <h1 className="generalColor">{timeData.time_12}</h1>
-                  <h1 className="generalColor">{timeData.date}</h1>
+                  <h1 className="generalColor">{timeString}</h1>
+                  <h1 className="generalColor">{typeof timeData.date === "string" ? new Date(timeData.date).toLocaleDateString("en-US") : timeData.date.toLocaleDateString("en-US")}</h1>
                   <h1 className="generalColor">{timeData.geo.country}</h1>
                 </div>
               }
@@ -273,27 +289,27 @@ function App() {
                 <div className="square3">
                   <div className="row" id="weatherRow1">
                     <div className="col-lg-2 col-12 order-lg-1" id="centerer">
-                      <h1>{weather5DayData.list[1].dt_txt}</h1>
+                      <h1>{new Date(weather5DayData.list[1].dt_txt).toLocaleString("en-US", {month: "2-digit", day: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit"}).replace(/, (\d{4})/, '\n$1')}</h1>
                       <h1>{weather5DayData.list[1].main.temp.toFixed()}°F</h1>
                       <h1>{weather5DayData.list[1].weather[0].main}</h1>
                     </div>
                     <div className="col-lg-2 col-12 order-lg-2" id="weather5Day">
-                      <h1>{weather5DayData.list[5].dt_txt}</h1>
+                      <h1>{new Date(weather5DayData.list[5].dt_txt).toLocaleString("en-US", {month: "2-digit", day: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit"}).replace(/, (\d{4})/, '\n$1')}</h1>
                       <h1>{weather5DayData.list[5].main.temp.toFixed()}°F</h1>
                       <h1>{weather5DayData.list[5].weather[0].main}</h1>
                     </div>
                     <div className="col-lg-2 col-12 order-lg-3" id="weather5Day">
-                      <h1>{weather5DayData.list[9].dt_txt}</h1>
+                      <h1>{new Date(weather5DayData.list[9].dt_txt).toLocaleString("en-US", {month: "2-digit", day: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit"}).replace(/, (\d{4})/, '\n$1')}</h1>
                       <h1>{weather5DayData.list[9].main.temp.toFixed()}°F</h1>
                       <h1>{weather5DayData.list[9].weather[0].main}</h1>
                     </div>
                     <div className="col-lg-2 col-12 order-lg-4" id="weather5Day">
-                      <h1>{weather5DayData.list[13].dt_txt}</h1>
+                      <h1>{new Date(weather5DayData.list[13].dt_txt).toLocaleString("en-US", {month: "2-digit", day: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit"}).replace(/, (\d{4})/, '\n$1')}</h1>
                       <h1>{weather5DayData.list[13].main.temp.toFixed()}°F</h1>
                       <h1>{weather5DayData.list[13].weather[0].main}</h1>
                     </div>
                     <div className="col-lg-2 col-12 order-lg-5" id="weather5Day">
-                      <h1>{weather5DayData.list[17].dt_txt}</h1>
+                      <h1>{new Date(weather5DayData.list[17].dt_txt).toLocaleString("en-US", {month: "2-digit", day: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit"}).replace(/, (\d{4})/, '\n$1')}</h1>
                       <h1>{weather5DayData.list[17].main.temp.toFixed()}°F</h1>
                       <h1>{weather5DayData.list[17].weather[0].main}</h1>
                     </div>
@@ -301,27 +317,27 @@ function App() {
 
                   <div className="row" id="weatherRow2">
                     <div className="col-lg-2 col-md-2 col-sm-2 col-12 order-lg-1" id="centerer">
-                      <h1>{weather5DayData.list[21].dt_txt}</h1>
+                      <h1>{new Date(weather5DayData.list[21].dt_txt).toLocaleString("en-US", {month: "2-digit", day: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit"}).replace(/, (\d{4})/, '\n$1')}</h1>
                       <h1>{weather5DayData.list[21].main.temp.toFixed()}°F</h1>
                       <h1>{weather5DayData.list[21].weather[0].main}</h1>
                     </div>
                     <div className="col-lg-2 col-md-2 col-sm-2 col-12 order-lg-2" id="weather5Day">
-                      <h1>{weather5DayData.list[25].dt_txt}</h1>
+                      <h1>{new Date(weather5DayData.list[25].dt_txt).toLocaleString("en-US", {month: "2-digit", day: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit"}).replace(/, (\d{4})/, '\n$1')}</h1>
                       <h1>{weather5DayData.list[25].main.temp.toFixed()}°F</h1>
                       <h1>{weather5DayData.list[25].weather[0].main}</h1>
                     </div>
                     <div className="col-lg-2 col-md-2 col-sm-2 col-12 order-lg-3" id="weather5Day">
-                      <h1>{weather5DayData.list[29].dt_txt}</h1>
+                      <h1>{new Date(weather5DayData.list[29].dt_txt).toLocaleString("en-US", {month: "2-digit", day: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit"}).replace(/, (\d{4})/, '\n$1')}</h1>
                       <h1>{weather5DayData.list[29].main.temp.toFixed()}°F</h1>
                       <h1>{weather5DayData.list[29].weather[0].main}</h1>
                     </div>
                     <div className="col-lg-2 col-md-2 col-sm-2 col-12 order-lg-4" id="weather5Day">
-                      <h1>{weather5DayData.list[33].dt_txt}</h1>
+                      <h1>{new Date(weather5DayData.list[33].dt_txt).toLocaleString("en-US", {month: "2-digit", day: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit"}).replace(/, (\d{4})/, '\n$1')}</h1>
                       <h1>{weather5DayData.list[33].main.temp.toFixed()}°F</h1>
                       <h1>{weather5DayData.list[33].weather[0].main}</h1>
                     </div>
                     <div className="col-lg-2 col-md-2 col-sm-2 col-12 order-lg-5" id="weather5Day">
-                      <h1>{weather5DayData.list[37].dt_txt}</h1>
+                      <h1>{new Date(weather5DayData.list[37].dt_txt).toLocaleString("en-US", {month: "2-digit", day: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit"}).replace(/, (\d{4})/, '\n$1')}</h1>
                       <h1>{weather5DayData.list[37].main.temp.toFixed()}°F</h1>
                       <h1>{weather5DayData.list[37].weather[0].main}</h1>
                     </div>
@@ -400,7 +416,7 @@ function App() {
             <div className="thingsToDo">
               <h1 className="generalColor">Hotels</h1>
               <div className="square2">
-                <h1 className="error1">No sites for this area</h1>
+                <h1 className="error1">No hotels for this area</h1>
               </div>
             </div>
             }
