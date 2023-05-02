@@ -5,6 +5,7 @@ import Popup from './Popup'
 
 function App() {
   
+  // Declare state variables using the useState() hook
   const [weatherData,setWeatherData] = useState({})
   const [newsData,setNewsData] = useState([])
   const [breweryData, setBreweryData] = useState([])
@@ -23,6 +24,7 @@ function App() {
   const [attractionsButtonPopup, setAttractionsButtonPopup] = useState(false)
   const [timeString, setTimeString] = useState(getTimeString());
 
+  //Refreshes the page and all of its data
   const refresh = () => {
     setWeatherData({})
     setNewsData([])
@@ -43,6 +45,7 @@ function App() {
     return () => clearInterval(intervalId);
   }, []);
 
+  //Changes time string from European standard to American Standard
   function getTimeString() {
     const date = new Date();
     date.setMinutes(date.getMinutes() + 1);
@@ -50,6 +53,7 @@ function App() {
     return timeString;
   }
 
+  //Function called after geolocation is found and longitude and latitude are given
   const searchTravel = (timeData) => {
     const hotelUrl = `https://api.geoapify.com/v2/places?categories=accommodation.hotel&bias=proximity:${timeData.geo.longitude},${timeData.geo.latitude}&limit=10&apiKey=bebb3860b6f74034ae8c146ef20ce2d8`
     const sitesUrl = `https://api.geoapify.com/v2/places?categories=tourism.sights&bias=proximity:${timeData.geo.longitude},${timeData.geo.latitude}&limit=10&apiKey=bebb3860b6f74034ae8c146ef20ce2d8`
@@ -77,6 +81,7 @@ function App() {
     })
   }
 
+  //Function called to get data
   const searchLocation = (event) => {
     if (event.key === 'Enter'){
 
@@ -143,12 +148,14 @@ function App() {
 
         <div className="row" id='row1'>
 
+          {/* Page Logo */ }
           <div className="col-lg-10 order-lg-1 col-12 order-1">
             <div className="logoSearch">
               <h1>GlobalGuide</h1>
             </div>
           </div>
 
+          {/* Information Popup */ }
           <div className="col-lg-2 order-lg-2 col-12 order-2">
             <div className="infoPopup">
               <button onClick={() => setInfoButtonPopup(true)}>More Information</button>
@@ -170,6 +177,7 @@ function App() {
 
         <div className="row" id='row2'>
 
+          {/* Location Score */ }
           <div className="col-lg-4 order-lg-1 col-12 order-2">
 
             {locationScoreData.length !== 0 &&
@@ -189,12 +197,11 @@ function App() {
                 </div>
               </div>
             }
-
-
           </div>
 
           <div className="col-lg-4 order-lg-2 col-12 order-1">
             <div className="titleSearch">
+              {/* Search Bar */ }
               <div className="searchBar">
                 <div className='input-group'>
                   <input 
@@ -208,6 +215,7 @@ function App() {
                 </div>
               </div>
 
+              {/* Time / Date / Country */ }
               {timeData.length !== 0 &&
                 <div className="beforeTitle">
                   <h1 className="generalColor">{timeString}</h1>
@@ -219,7 +227,8 @@ function App() {
           </div>
 
           <div className="col-lg-4 order-lg-3 col-12 order-3">
-
+            
+            {/* Safety Score */ }
             {locationScoreData.length !== 0 && (
               <div className="safeScore">
                 <h1 className="generalColor">Safety Score</h1>
@@ -247,7 +256,8 @@ function App() {
         <div className="row" id='row3'>
 
           <div className="col-lg-4 order-lg-1 col-12 order-2">
-
+            
+            {/* News Data */ }
             {newsData.length !== 0 &&
             <div className="news">
               <h1 className="generalColor">News</h1>
@@ -277,6 +287,7 @@ function App() {
 
           <div className="col-lg-4 order-lg-2 col-12 order-1">
             
+            {/* Weather Data */ }
             {weatherData.name !== undefined &&
             <div className="weatherTitle">
               <div className="theTitle">
@@ -318,7 +329,8 @@ function App() {
                       <h1>{weather5DayData.list[17].weather[0].main}</h1>
                     </div>
                   </div>
-
+                  
+                  {/* Weather Data Popup */ }
                   <div className="row" id="weatherRow2">
                     <div className="col-lg-2 col-md-2 col-sm-2 col-12 order-lg-1" id="centerer">
                       <h1>{new Date(weather5DayData.list[21].dt_txt).toLocaleString("en-US", {month: "2-digit", day: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit"}).replace(/, (\d{4})/, '\n$1')}</h1>
@@ -368,7 +380,8 @@ function App() {
           </div>
 
           <div className="col-lg-4 order-lg-3 col-12 order-3">
-
+            
+            {/* Brewery Data */ }
             {breweryData.length !== 0 &&
               <div className="thingsToDo">
                 <h1 className="generalColor">Breweries</h1>
@@ -411,7 +424,8 @@ function App() {
         <div className="row" id='row3'>
 
           <div className="col-lg-4 order-lg-1 col-12 order-2">
-
+          
+          {/* Hotel Data */ }
           {hotelData.length !== 0 &&
               <div className="thingsToDo">
                 <h1 className="generalColor">Hotels</h1>
@@ -447,6 +461,7 @@ function App() {
 
           <div className="col-lg-4 order-lg-2 col-12 order-1">
 
+            {/* Sites Data */ }
             {sitesData.length !== 0 &&
               <div className="thingsToDo">
                 <h1 className="generalColor">Sites</h1>
@@ -481,7 +496,8 @@ function App() {
           </div>
 
           <div className="col-lg-4 order-lg-3 col-12 order-3">
-
+            
+            {/* Attractions Data */ }
             {attractionsData.length !== 0 &&
               <div className="thingsToDo">
                 <h1 className="generalColor">Attractions</h1>
